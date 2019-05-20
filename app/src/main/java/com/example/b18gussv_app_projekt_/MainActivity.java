@@ -56,6 +56,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), playerArrayList.get(position).info(), Toast.LENGTH_LONG).show();
             }
         });
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, About.class);
+                startActivity(i);
+            }
+        });
         new FetchData().execute();
 
 
