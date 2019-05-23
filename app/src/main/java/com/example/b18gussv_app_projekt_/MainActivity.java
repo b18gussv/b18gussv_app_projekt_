@@ -33,6 +33,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+
+//Tidigare historik från projektet finns i en githublänk i rapporten.
 public class MainActivity extends AppCompatActivity {
     private ArrayList<Player> playerArrayList = new ArrayList<>();
 
@@ -46,16 +48,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //Skapar och deklarerar vad ArrayAdaptern ska innehålla.
         ArrayAdapter<Player> adapter = new ArrayAdapter<>(this, R.layout.list_item_textview, R.id.list_item_textview, playerArrayList);
-        /*final*/
+        //Sätter my_listview till att visa innehållet från list_item_textview.
         my_listview = (ListView) findViewById(R.id.list_item_textview);
         my_listview.setAdapter(adapter);
+        //En listener som kör en toast med information vid tryckning av något på listan.
         my_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(), playerArrayList.get(position).info(), Toast.LENGTH_LONG).show();
             }
         });
+        //En knapp som byter till about aktiviteten när man trycker på den.
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Klass för att hämta data.
     private class FetchData extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... params) {
@@ -136,11 +142,11 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String o) {
             super.onPostExecute(o);
             Log.d("Player", o);
-
             try {
+                //Gör en ny JSONArray där objekten som hämtats i FetchData läggs i.
                 JSONArray parray = new JSONArray(o);
                 Log.d("Player", parray.get(0).toString());
-
+                //Iteration för att iterera in innehållet från JSONArrayen till ArrayList.
                 for (int i = 0; i < parray.length(); i++) {
                     JSONObject player = parray.getJSONObject(i);
                     String name = player.getString("name");
@@ -152,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
                     playerArrayList.add(new Player(name, location, height, company, category, cost));
 
                 }
+                //ArrayAdapter för den slutgiltiga arrayen.
                 ArrayAdapter<Player> adapter = new ArrayAdapter<Player>(getApplicationContext(), R.layout.list_item_textview, R.id.list_item_textview, playerArrayList);
                 final ListView my_listview = (ListView) findViewById(R.id.list_item_textview);
                 my_listview.setAdapter(adapter);

@@ -22,6 +22,7 @@ public class Player {
         cost=-1;
     }
 
+    //Definerar vad en Player ska innehålla.
     public Player(String n, String l, int h, String k,String p, int s){
         name=n;
         location=l;
@@ -30,13 +31,14 @@ public class Player {
         category=p;
         cost=s;
     }
-
+    //Gör en sträng för informationen som ska lagras i varje spelare. Det är denna som hämtas av Toasten i MainActivity.
     public String info(){
         String tmp=new String();
         tmp+="Namn: "+name+"\nLängd: "+location+"m"+"\nPPG: "+height+"\nLag: "+company+"\nPosition: "+category+"\nLön: "+cost+"miljoner USD";
         return tmp;
     }
 
+    //Getter och setters.
     public void setName(String n){
         name=n;
     }
